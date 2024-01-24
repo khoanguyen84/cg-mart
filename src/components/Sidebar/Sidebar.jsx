@@ -5,7 +5,7 @@ import Brand from "../Brand/Brand";
 import Status from "./Status";
 function Sidebar() {
     return (
-        <div className="d-flex flex-column me-1 pe-1 h-100">
+        <div className="d-flex flex-column">
             <div className="accordion accordion-flush">
                 <Status/>
                 <Brand />
