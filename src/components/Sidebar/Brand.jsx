@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const recommended = [
+const brandList = [
     { "value": 'All', "name": 'All Products' },
     { "value": "Apple", "name": "Apple" },
     { "value": "Samsung", "name": "Samsung" },
@@ -95,16 +95,13 @@ function Brand() {
                 collapse && (
                     <div className="form-group">
                         {
-                            recommended.map(recmd => (
-                                <button key={recmd.value}
-                                    className={
-                                        `btn btn-sm btn-outline-secondary me-1 mb-1
-                                    ${recmd.value === 'All' ? 'active' : ''}
-                                `
-                                    }
+                            brandList.map(brand => (
+                                <button
+                                    key={brand.value}
+                                    className={`btn btn-sm btn-outline-secondary me-1 mb-1 ${brand.value === 'All' ? 'active' : ''}`}
                                     type="button"
                                 >
-                                    {recmd.name}
+                                    {brand.name}
                                 </button>
                             ))
                         }
