@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { ShoppingContext } from "../../context/shopping-context";
+import { setSearchPrice } from "../../reducer/actions";
 
-const prices = [
+const priceList = [
     {
         value: '0,0',
         name: "All"
@@ -36,6 +38,7 @@ const prices = [
 ]
 function Price() {
     const [collapse, setCollapse] = useState(false)
+    const { state: { filters: price }, dispatch } = useContext(ShoppingContext)
     return (
         <div className="accordion-item  py-2 d-flex flex-column justify-content-center">
             <h5 className="accordion-header">
@@ -48,19 +51,20 @@ function Price() {
                 collapse && (
                     <div className="form-group">
                         {
-                            prices.map((price, index) => (
-                                <div key={price} className="form-check py-1">
+                            priceList.map((item, index) => (
+                                <div key={item.value} className="form-check py-1">
                                     <input className="form-check-input" type="radio" name="price"
                                         id={`price_${index}`}
-                                        value={price.value}
-                                        defaultChecked={price.name === 'All'}
+                                        value={item.value}
+                                        defaultChecked={item.name === 'All'}
+                                        onChange={() => dispatch(setSearchPrice(item.value))}
                                     />
                                     <label
                                         role="button"
                                         htmlFor={`price_${index}`}
-                                        className={`form-check-label ${price.name === 'All' ? 'text-decoration-underline fw-bolder' : ''}`}
+                                        className={`form-check-label ${item.name === price ? 'text-decoration-underline fw-bolder' : ''}`}
                                     >
-                                        {price.name}
+                                        {item.name}
                                     </label>
                                 </div>
                             ))

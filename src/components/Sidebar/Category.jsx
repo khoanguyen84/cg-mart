@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { ShoppingContext } from "../../context/shopping-context";
+import { setSearchCategory } from "../../reducer/actions";
 
 const categories = [
     { "value": 'All', "name": 'All' },
@@ -24,6 +26,7 @@ const categories = [
 ]
 function Category() {
     const [collapse, setCollapse] = useState(false)
+    const { state: { filters: { category }}, dispatch } = useContext(ShoppingContext)
     return (
         <div className="accordion-item py-2 d-flex flex-column justify-content-center">
             <h5 className="accordion-header">
@@ -31,7 +34,6 @@ function Category() {
                     onClick={() => setCollapse(!collapse)}>
                     Category
                 </span>
-
             </h5>
             {
                 collapse && (
@@ -43,11 +45,12 @@ function Category() {
                                         id={`cat_${index}`}
                                         value={cat.value}
                                         defaultChecked={cat.value === 'All'}
+                                        onChange={() => dispatch(setSearchCategory(cat.value))}
                                     />
                                     <label
                                         htmlFor={`cat_${index}`}
                                         role="button"
-                                        className={`form-check-label ${cat.value === 'All' ? 'text-decoration-underline fw-bolder' : ''}`}
+                                        className={`form-check-label ${cat.value === category ? 'text-decoration-underline fw-bolder' : ''}`}
                                     >
                                         {cat.name}
                                     </label>

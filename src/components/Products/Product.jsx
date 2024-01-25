@@ -1,5 +1,6 @@
 import React from "react";
 import { FaCartArrowDown, FaStar, FaStarHalf } from "react-icons/fa";
+import GenerateStar from "../Star/GenerateStar";
 
 function Product({product}) {
     return (
@@ -13,11 +14,7 @@ function Product({product}) {
                     <p className="fw-bolder text-center">{product?.brand} - {product?.title}</p>
                     <div className="d-flex align-items-center justify-content-between mb-2">
                         <div className="me-1">
-                            <FaStar color="orange" />
-                            <FaStar color="orange" />
-                            <FaStar color="orange" />
-                            <FaStar color="orange" />
-                            <FaStarHalf color="orange" />
+                            <GenerateStar star={product?.rating}/>
                         </div>
                     </div>
                     <div className="d-flex align-items-center justify-content-between mb-2">
@@ -31,7 +28,7 @@ function Product({product}) {
                     <div className="d-flex align-items-center justify-content-between">
                          <div>
                             <del className="line-through me-2">${product?.price}</del>
-                            <span className="fs-4 text-danger fw-bolder">${Math.floor((product?.price*(1-Number(product?.discountPercentage)*0.01)))}</span>
+                            <span className="fs-4 text-danger fw-bolder">${Math.round((product?.price*(1-Number(product?.discountPercentage)*0.01)))}</span>
                         </div>   
                         <FaCartArrowDown size={20} className="btn-cart"/>
                     </div>
