@@ -6,8 +6,7 @@ import { fetchData } from "../../reducers/actions";
 function Products(){
     const dispatch = useDispatch()
     const productList = useSelector((state) => state.products)
-    const { searchText } = useSelector((state) => state.filters) 
-    console.log(searchText);
+    const { searchText } = useSelector((state) => state.filters)
     useEffect(() => {
         async function getProductList(){
             let res = await fetch('https://dummyjson.com/products?limit=100&skip=0')
@@ -22,7 +21,7 @@ function Products(){
             <div className="row">
                 {
                     productList?.map((product) => (
-                        <Product product={product}/>
+                        <Product key={product.id} product={product}/>
                     ))
                 }
             </div>
