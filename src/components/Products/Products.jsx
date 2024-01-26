@@ -15,12 +15,22 @@ function Products(){
         }
         getProductList()
     }, [])
+
+    const queryProducts = () => {
+        let filteredProducts = [...productList]
+        if(searchText) {
+            filteredProducts = filteredProducts.filter(p => p.title.toLowerCase().includes(searchText.toLowerCase()))
+        }
+        return filteredProducts
+    }
+
+    const filteredProducts = queryProducts()
     return (
         <div className="py-2 d-flex flex-column justify-content-center">
             <h5>Products</h5>
             <div className="row">
                 {
-                    productList?.map((product) => (
+                    filteredProducts?.map((product) => (
                         <Product key={product.id} product={product}/>
                     ))
                 }
