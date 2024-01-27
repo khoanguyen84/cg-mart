@@ -11,7 +11,7 @@ function Product({product}) {
                     style={{width: "90%"}}
                 />
                 <div className="w-100 px-4 py-3">
-                    <p className="fw-bolder text-center">{product?.brand} - {product?.title}</p>
+                    <p className="fw-bolder text-center">{product?.brand.toUpperCase()} - {product?.title.toUpperCase()}</p>
                     <div className="d-flex align-items-center justify-content-between mb-2">
                         <div className="me-1">
                             <GenerateStar star={product?.rating}/>

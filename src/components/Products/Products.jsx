@@ -5,16 +5,16 @@ import { fetchData } from "../../reducer/actions";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 var limit = 8
-var totalRows = 0
 function Products() {
     const { state, dispatch } = useContext(ShoppingContext)
     const { products, filters: { searchText, status, brand, category, price } } = state
     const [hasMore, setHasMore] = useState(true)
+    const [totalRows, setTotalRows] = useState(0)
     useEffect(() => {
         async function getProductList() {
             let res = await fetch('https://dummyjson.com/products?limit=8&skip=0')
             let data = await res.json()
-            totalRows = data?.total
+            setTotalRows(data?.total)
             dispatch(fetchData(data?.products))
         }
         getProductList()
