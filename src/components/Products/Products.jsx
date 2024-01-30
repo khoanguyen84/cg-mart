@@ -1,26 +1,44 @@
 import React, { useEffect, useState } from "react";
 import Product from "./Product";
+import { useDispatch, useSelector } from 'react-redux';
+import productsSlice, { fetchDataThunkAction } from "../../slices/productsSlice";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { filteredProductsSelector } from "../../redux-toolkit/selectors";
 
-function Products(){
-    const [productList, setProductList] = useState([])
+var limit = 8
+function Products() {
+    const filteredProducts = useSelector(filteredProductsSelector)
+    const totalRows = useSelector((state) => state?.products?.totalRows)
+    const dispatch = useDispatch()
     useEffect(() => {
-        async function getProductList(){
-            let res = await fetch('https://dummyjson.com/products?limit=100&skip=0')
-            let data = await res.json()
-            setProductList(data?.products)
+        dispatch(fetchDataThunkAction(limit))
+    }, [dispatch])
+
+    const loadMore = () => {
+        if (limit < totalRows) {
+            limit += 8;
+            dispatch(fetchDataThunkAction(limit))
         }
-        getProductList()
-    }, [])
+    }
     return (
         <div className="py-2 d-flex flex-column justify-content-center">
             <h5>Products</h5>
-            <div className="row">
-                {
-                    productList?.map((product) => (
-                        <Product product={product}/>
-                    ))
-                }
-            </div>
+            <InfiniteScroll
+                dataLength={filteredProducts.length}
+                hasMore={limit < totalRows}
+                loader={<p>Loading...</p>}
+                next={loadMore}
+                style={{overflow: 'hidden'}}
+                endMessage= {<p>You have seem it all!</p>}
+            >
+                <div className="row">
+                    {
+                        filteredProducts?.map((product) => (
+                            <Product key={product.id} product={product} />
+                        ))
+                    }
+                </div>
+            </InfiniteScroll>
         </div>
     )
 }
